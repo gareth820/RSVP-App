@@ -4,46 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rachel & Steven - RSVP</title>
+    <title>Rachel & Steven - Wedding RSVP</title>
+    <!-- Tailwind is now configured via tailwind.config.js in a prod environment, but we keep the CDN script with our config object for this specific runtime if needed, or rely on Vite's build. -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-purple': '#5D3E6B',
+              'brand-green': '#7C9070',
+              'brand-beige': '#FDFBF7',
+              'brand-deep': '#2D242F',
+            },
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              script: ['"Dancing Script"', 'cursive'],
+              sans: ['Inter', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FDFBF7; /* Soft Beige */
-            color: #2D242F; /* Very Deep Purple/Black */
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-script {
-            font-family: 'Dancing Script', cursive;
-        }
-        .tracking-widest-extra {
-            letter-spacing: 0.3em;
-        }
-        .bg-beige { background-color: #FDFBF7; }
-        .text-purple { color: #5D3E6B; }
-        .bg-purple { background-color: #5D3E6B; }
-        .text-green { color: #7C9070; }
-        .bg-green { background-color: #7C9070; }
-        .border-purple { border-color: #5D3E6B; }
-        .border-green { border-color: #7C9070; }
+      body {
+        background-color: #FDFBF7;
+        color: #2D242F;
+        -webkit-font-smoothing: antialiased;
+      }
+      .tracking-widest-extra { letter-spacing: 0.3em; }
     </style>
 <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
-    "react/": "https://esm.sh/react@^19.2.4/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
 <body>
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
