@@ -20,7 +20,7 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ onSuccess }) => {
 
   const handleAIHelp = async (tone: 'funny' | 'heartfelt' | 'formal') => {
     if (!formData.name.trim()) {
-      alert("Please enter your name first.");
+      alert("Please provide your name, so the assistant may properly address the couple.");
       return;
     }
     setIsGenerating(true);
@@ -32,67 +32,75 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ onSuccess }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.attendance) {
-      alert("Please complete the required fields.");
+      alert("The social season demands a complete reply. Please fill in the required fields.");
       return;
     }
     
     setIsSubmitting(true);
-    // Simulate API delay for a polished feel
-    await new Promise(r => setTimeout(r, 1000));
+    // Mimic the time it takes to seal an envelope
+    await new Promise(r => setTimeout(r, 1500));
     onSuccess(formData);
     setIsSubmitting(false);
   };
 
   return (
-    <section id="rsvp" className="bg-white py-24 px-6 border-t border-brand-beige">
-      <div className="max-w-md mx-auto">
-        <div className="text-center mb-16 animate-fadeIn">
-          <h2 className="font-script text-7xl md:text-8xl mb-4 text-brand-green">rsvp</h2>
-          <p className="text-xs uppercase tracking-widest text-brand-purple opacity-60">Kindly reply by April 05, 2025</p>
+    <section id="rsvp" className="bg-white py-32 px-6 relative overflow-hidden">
+      {/* Decorative Ornate Borders */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-purple/10 to-transparent"></div>
+      
+      <div className="max-w-md mx-auto relative">
+        <div className="text-center mb-20 animate-fadeIn">
+          <div className="flex justify-center mb-6 opacity-20">
+            <svg width="40" height="20" viewBox="0 0 40 20" className="text-brand-purple">
+              <path fill="none" stroke="currentColor" strokeWidth="1" d="M0,10 Q10,0 20,10 T40,10" />
+            </svg>
+          </div>
+          <h2 className="font-script text-7xl md:text-8xl mb-4 text-brand-green drop-shadow-sm">rsvp</h2>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-brand-purple opacity-60 font-serif italic">The favour of your reply is requested by April 05</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-12">
+        <form onSubmit={handleSubmit} className="space-y-16">
           {/* Name Field */}
-          <div className="relative">
+          <div className="relative group">
             <input
               type="text"
               required
               id="name"
-              className="w-full border-b border-brand-purple border-opacity-20 py-4 focus:outline-none focus:border-opacity-100 focus:border-brand-green transition-all placeholder-transparent peer text-brand-deep"
+              className="w-full border-b border-brand-purple border-opacity-10 py-5 focus:outline-none focus:border-opacity-100 focus:border-brand-green transition-all bg-transparent placeholder-transparent peer text-brand-deep font-serif text-lg"
               placeholder="Name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
             <label 
               htmlFor="name"
-              className="absolute left-0 top-4 transition-all -translate-y-8 text-[10px] uppercase tracking-widest text-brand-purple opacity-60 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-8 peer-focus:text-[10px]"
+              className="absolute left-0 top-5 transition-all -translate-y-8 text-[10px] uppercase tracking-widest text-brand-purple opacity-60 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-8 peer-focus:text-[10px] font-serif"
             >
-              Name *
+              Your Name *
             </label>
           </div>
 
           {/* Attendance Selection */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <button 
               type="button"
-              className="flex items-center space-x-4 w-full text-left group"
+              className="flex items-center space-x-6 w-full text-left group"
               onClick={() => setFormData({ ...formData, attendance: Attendance.ACCEPT })}
             >
-              <div className={`w-6 h-6 border border-brand-purple flex items-center justify-center transition-all ${formData.attendance === Attendance.ACCEPT ? 'bg-brand-green border-brand-green' : 'group-hover:bg-brand-beige'}`}>
-                {formData.attendance === Attendance.ACCEPT && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              <div className={`w-8 h-8 rounded-full border border-brand-purple border-opacity-20 flex items-center justify-center transition-all ${formData.attendance === Attendance.ACCEPT ? 'bg-brand-green border-brand-green ring-4 ring-brand-green/5' : 'group-hover:bg-brand-beige'}`}>
+                {formData.attendance === Attendance.ACCEPT && <div className="w-2.5 h-2.5 bg-white rounded-full"></div>}
               </div>
-              <span className={`text-lg font-serif transition-colors ${formData.attendance === Attendance.ACCEPT ? 'text-brand-green' : 'text-brand-purple'}`}>Accepts with pleasure</span>
+              <span className={`text-xl font-serif italic transition-colors ${formData.attendance === Attendance.ACCEPT ? 'text-brand-green' : 'text-brand-purple'}`}>Accepts with pleasure</span>
             </button>
 
             <button 
               type="button"
-              className="flex items-center space-x-4 w-full text-left group"
+              className="flex items-center space-x-6 w-full text-left group"
               onClick={() => setFormData({ ...formData, attendance: Attendance.DECLINE })}
             >
-              <div className={`w-6 h-6 border border-brand-purple flex items-center justify-center transition-all ${formData.attendance === Attendance.DECLINE ? 'bg-brand-purple' : 'group-hover:bg-brand-beige'}`}>
-                {formData.attendance === Attendance.DECLINE && <div className="w-2 h-2 bg-white rounded-full"></div>}
+              <div className={`w-8 h-8 rounded-full border border-brand-purple border-opacity-20 flex items-center justify-center transition-all ${formData.attendance === Attendance.DECLINE ? 'bg-brand-purple border-brand-purple ring-4 ring-brand-purple/5' : 'group-hover:bg-brand-beige'}`}>
+                {formData.attendance === Attendance.DECLINE && <div className="w-2.5 h-2.5 bg-white rounded-full"></div>}
               </div>
-              <span className={`text-lg font-serif transition-colors ${formData.attendance === Attendance.DECLINE ? 'text-brand-purple' : 'text-brand-purple opacity-60'}`}>Declines with regret</span>
+              <span className={`text-xl font-serif italic transition-colors ${formData.attendance === Attendance.DECLINE ? 'text-brand-purple' : 'text-brand-purple opacity-40'}`}>Declines with regret</span>
             </button>
           </div>
 
@@ -101,37 +109,37 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ onSuccess }) => {
             <input
               type="email"
               id="email"
-              className="w-full border-b border-brand-purple border-opacity-20 py-4 focus:outline-none focus:border-opacity-100 focus:border-brand-green transition-all placeholder-transparent peer text-brand-deep"
+              className="w-full border-b border-brand-purple border-opacity-10 py-5 focus:outline-none focus:border-opacity-100 focus:border-brand-green transition-all bg-transparent placeholder-transparent peer text-brand-deep font-serif"
               placeholder="Email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             />
             <label 
               htmlFor="email"
-              className="absolute left-0 top-4 transition-all -translate-y-8 text-[10px] uppercase tracking-widest text-brand-purple opacity-60 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-8 peer-focus:text-[10px]"
+              className="absolute left-0 top-5 transition-all -translate-y-8 text-[10px] uppercase tracking-widest text-brand-purple opacity-60 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:text-base peer-focus:-translate-y-8 peer-focus:text-[10px] font-serif"
             >
               Email Address
             </label>
           </div>
 
-          {/* Entree Choice - Only visible if attending */}
+          {/* Entree Choice */}
           {formData.attendance === Attendance.ACCEPT && (
-            <div className="pt-8 space-y-6 border-t border-brand-beige animate-fadeIn">
-              <p className="text-sm italic text-brand-green">
-                Please select an entree choice
+            <div className="pt-10 space-y-8 border-t border-brand-beige animate-reveal">
+              <p className="text-sm font-serif italic text-brand-green text-center">
+                Select your preferred delicacy
               </p>
               <div className="grid grid-cols-1 gap-4">
                 {[Entree.CHICKEN, Entree.BEEF, Entree.VEGETARIAN].map((option) => (
                   <button 
                     key={option}
                     type="button"
-                    className={`flex items-center space-x-4 p-4 border transition-all ${formData.entree === option ? 'border-brand-green bg-brand-green bg-opacity-5' : 'border-brand-purple border-opacity-10'}`}
+                    className={`flex items-center justify-between px-6 py-5 border rounded-full transition-all ${formData.entree === option ? 'border-brand-green bg-brand-green/5 shadow-inner' : 'border-brand-purple border-opacity-5 hover:border-opacity-20'}`}
                     onClick={() => setFormData({ ...formData, entree: option })}
                   >
-                    <div className={`w-4 h-4 rounded-full border border-brand-purple flex items-center justify-center ${formData.entree === option ? 'bg-brand-green border-brand-green' : ''}`}>
+                    <span className="font-serif text-brand-deep text-lg">{option}</span>
+                    <div className={`w-5 h-5 rounded-full border border-brand-purple flex items-center justify-center ${formData.entree === option ? 'bg-brand-green border-brand-green' : 'opacity-20'}`}>
                       {formData.entree === option && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
                     </div>
-                    <span className="font-serif text-brand-deep">{option}</span>
                   </button>
                 ))}
               </div>
@@ -139,30 +147,35 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ onSuccess }) => {
           )}
 
           {/* AI Message Assistant */}
-          <div className="space-y-4 pt-8 border-t border-brand-beige">
-            <label className="text-[10px] uppercase tracking-widest text-brand-purple opacity-60">Message for the couple</label>
-            <textarea
-              className="w-full border border-brand-purple border-opacity-10 p-4 min-h-[120px] focus:outline-none focus:border-brand-green transition-all rounded-sm text-brand-deep bg-brand-beige bg-opacity-30 resize-none"
-              placeholder="Your warm wishes..."
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-            />
-            <div className="flex flex-wrap gap-2">
+          <div className="space-y-6 pt-10 border-t border-brand-beige">
+            <label className="text-[10px] uppercase tracking-[0.3em] text-brand-purple opacity-50 font-serif text-center block w-full">Correspondence</label>
+            <div className="relative">
+              <textarea
+                className="w-full border-0 border-b border-brand-purple border-opacity-5 p-4 min-h-[140px] focus:outline-none focus:border-brand-green focus:border-opacity-50 transition-all text-brand-deep bg-brand-beige/20 resize-none font-serif italic text-lg leading-relaxed placeholder:text-brand-purple/20"
+                placeholder="A witticism or well-wish for the couple..."
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              />
+              <div className="absolute bottom-2 right-2 opacity-5">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3">
               <button 
                 type="button"
                 disabled={isGenerating}
                 onClick={() => handleAIHelp('heartfelt')}
-                className="text-[10px] uppercase border border-brand-green border-opacity-40 text-brand-green px-4 py-2 rounded-full hover:bg-brand-green hover:text-white transition-all disabled:opacity-50"
+                className="text-[9px] uppercase tracking-widest font-serif border border-brand-green border-opacity-30 text-brand-green px-6 py-2.5 rounded-full hover:bg-brand-green hover:text-white transition-all disabled:opacity-50 shadow-sm"
               >
-                {isGenerating ? 'Assistant Thinking...' : 'Heartfelt Suggestion'}
+                {isGenerating ? 'Dipping quill...' : 'Heartfelt Correspondence'}
               </button>
               <button 
                 type="button"
                 disabled={isGenerating}
                 onClick={() => handleAIHelp('funny')}
-                className="text-[10px] uppercase border border-brand-purple border-opacity-20 text-brand-purple px-4 py-2 rounded-full hover:bg-brand-purple hover:text-white transition-all disabled:opacity-50"
+                className="text-[9px] uppercase tracking-widest font-serif border border-brand-purple border-opacity-20 text-brand-purple px-6 py-2.5 rounded-full hover:bg-brand-purple hover:text-white transition-all disabled:opacity-50 shadow-sm"
               >
-                {isGenerating ? 'Assistant Thinking...' : 'Funny Suggestion'}
+                {isGenerating ? 'Dipping quill...' : 'Witty Correspondence'}
               </button>
             </div>
           </div>
@@ -170,17 +183,13 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ onSuccess }) => {
           <button 
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-brand-green text-white py-5 text-sm uppercase tracking-[0.2em] hover:bg-brand-purple transition-all font-medium shadow-xl shadow-brand-green/10 disabled:opacity-70 flex justify-center items-center"
+            className="w-full bg-brand-purple text-brand-beige py-6 text-[10px] uppercase tracking-[0.4em] hover:bg-brand-deep transition-all font-serif shadow-2xl shadow-brand-purple/20 disabled:opacity-80 flex justify-center items-center rounded-sm"
           >
             {isSubmitting ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Processing...
+              <span className="flex items-center italic lowercase font-serif text-lg tracking-normal">
+                Sealing the envelope...
               </span>
-            ) : 'Send RSVP'}
+            ) : 'Send Reply'}
           </button>
         </form>
       </div>
